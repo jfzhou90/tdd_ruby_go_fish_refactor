@@ -1,0 +1,31 @@
+.login__title {
+  font-size: 25pt;
+  margin: -10px 0 -5px 0;
+}
+
+.login__logo {
+  margin-top: -50px;
+  width: 30%;
+  height: 30%;
+}
+
+.login__text {
+  justify-content: left;
+  margin-left: 50px;
+  font-size: 11px;
+}
+
+.login__input {
+  border: 0;
+  background: transparent;
+  border-bottom: 1px solid black;
+  text-align: center;
+  letter-spacing: 1.5px;
+  margin: 0px auto 10px auto;
+  font-size: 18px;
+}
+
+.signup {
+  padding-top: 8px;
+  font-size: 10px;
+}

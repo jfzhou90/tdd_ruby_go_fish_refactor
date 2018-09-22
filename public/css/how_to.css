@@ -1,0 +1,11 @@
+.how_to_instruction {
+  font-size: 10px;
+}
+
+.return {
+  padding: 5px;
+}
+
+.return:active {
+  padding: 5px;
+}

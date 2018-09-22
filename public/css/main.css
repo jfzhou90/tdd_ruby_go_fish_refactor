@@ -1,0 +1,73 @@
+/* This file is for general purposes only. */
+body {
+  background: #66A6CB;
+}
+
+.container {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.inner__container {
+  background: #62B3E1;
+  width: 300px;
+  text-align: center;
+  border-radius: 10px;
+  padding: 10px;
+  align-items: center;
+}
+
+.shadow {
+  box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.5);
+}
+
+.row {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.button {
+  border-radius: 10px;
+  margin: auto;
+  width: 70%;
+  background-image: linear-gradient(#3C95C8, #20597A);
+  border: none;
+  padding: 10px;
+  font-size: 20px;
+  text-decoration: none;
+}
+
+.button:active{
+  border-radius: 10px;
+  margin: auto;
+  width: 70%;
+  background-image: linear-gradient(#20597A, #3C95C8);
+  border: none;
+  padding: 10px;
+  font-size: 20px;
+  text-decoration: none;
+}
+
+.menu__container {
+  display: flex;
+  flex-direction: column;
+  align-content: space-around;
+}
+
+.menu__item {
+  margin: 10px 0 10px 0;
+}
+
+.menu__item:active {
+  margin: 10px 0 10px 0;
+}
+
+.page__title {
+  width: 100%;
+  background: #20597A;
+  margin-top: 0px;
+  border-radius: 8px;
+}
