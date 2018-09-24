@@ -37,11 +37,21 @@ class GoFishGame
     deck.shuffle
     init_cards_count = players.count > 3 ? 5 : 7
     init_cards_count.times do
-      players.each { |player| player.add_cards([deck.deal]) }
+      players.each { |player| player.add_cards(deck.deal) }
     end
   end
 
   def highest_score_player
     players.max_by(&:points)
+  end
+
+  def transfer_cards(player, rank)
+    current_player.add_cards(player.give(rank))
+  end
+
+  def go_fish(rank)
+    card = deck.deal
+    current_player.add_cards(card)
+    go_to_next_player unless card.rank.casecmp(rank).zero?
   end
 end

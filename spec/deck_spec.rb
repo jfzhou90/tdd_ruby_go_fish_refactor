@@ -21,8 +21,8 @@ describe(CardDeck) do
     it('shuffles the deck into a random order, may fail if shuffled is the same as non-shuffled') do
       deck.shuffle
       card = deck.deal
-      card2 = deck.deal
-      expect(card.rank_equal(card2)).to be(false)
+      card2 = PlayingCard.new
+      expect(card == card2).to be(false)
     end
   end
 end

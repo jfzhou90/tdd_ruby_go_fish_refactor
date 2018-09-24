@@ -5,7 +5,7 @@ require('playing_card')
 require('player')
 
 describe(GoFishGame) do
-  let(:game) { GoFishGame.new }
+  let(:game) { GoFishGame.new(deck: TestDeck.new) }
   let(:player) { Player.new(name: 'Joey') }
   let(:player2) { Player.new(name: 'Roy') }
   let(:players) { [Player.new, Player.new, Player.new, Player.new] }
@@ -15,7 +15,7 @@ describe(GoFishGame) do
     it('allows user to join a game') do
       game.add_players(player)
       expect(game.players.count).to be(1)
-      game.add_players(player)
+      game.add_players(player2)
       expect(game.players.count).to be(2)
     end
 
@@ -76,6 +76,35 @@ describe(GoFishGame) do
       game.any_winner?
       expect(game.winner).to_not be(player)
       expect(game.winner).to be(player2)
+    end
+  end
+
+  describe('#transfer_cards') do
+    it('transfer cards from requested to requester') do
+      game.add_players([player, player2])
+      player2.add_cards(set)
+      game.send(:transfer_cards, player2, 'Ace')
+      expect(player.cards_left).to be(4)
+    end
+  end
+
+  describe('#go_fish') do
+    it('player takes a card from the deck.') do
+      game.add_players(player)
+      game.send(:go_fish, 'Ace')
+      expect(player.cards_left).to be(1)
+    end
+
+    it('round remains the same if player fished the requested rank') do
+      game.add_players([player, player2])
+      game.send(:go_fish, 'Ace')
+      expect(game.current_player.name).to eq('Joey')
+    end
+
+    it('round increases if player fished the wrong rank') do
+      game.add_players([player, player2])
+      game.send(:go_fish, '2')
+      expect(game.current_player.name).to eq('Roy')
     end
   end
 end
