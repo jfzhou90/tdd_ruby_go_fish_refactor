@@ -2,7 +2,6 @@ require('deck')
 
 describe(CardDeck) do
   let(:deck) { CardDeck.new }
-  let(:deck2) { CardDeck.new }
 
   describe('#initialize') do
     it('starts the deck with 52 cards') do

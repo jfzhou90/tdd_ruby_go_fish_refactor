@@ -3,13 +3,13 @@ require('playing_card')
 
 describe(PlayingCard) do
   let(:card1) { PlayingCard.new }
-  let(:card2) { PlayingCard.new(rank: 'A', suit: 'Clubs') }
+  let(:card2) { PlayingCard.new(rank: 'Ace', suit: 'Clubs') }
   let(:card3) { PlayingCard.new(rank: 2, suit: 'Hearts') }
   let(:card4) { PlayingCard.new(rank: 2, suit: 'Hearts') }
 
   describe('#initialize') do
     it('create a card with default rank and suit if no arguments input') do
-      expect(card1.rank).to eq('A')
+      expect(card1.rank).to eq('Ace')
       expect(card1.suit).to eq('Spades')
     end
 
@@ -21,8 +21,8 @@ describe(PlayingCard) do
 
   describe('#to_s') do
     it('read the card in human readable way') do
-      expect(card1.to_s).to eq('A of Spades')
-      expect(card2.to_s).to eq('A of Clubs')
+      expect(card1.to_s).to eq('Ace of Spades')
+      expect(card2.to_s).to eq('Ace of Clubs')
       expect(card3.to_s).to eq('2 of Hearts')
     end
   end

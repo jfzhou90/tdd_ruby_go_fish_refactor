@@ -1,6 +1,6 @@
 class PlayingCard
   attr_reader :rank, :suit
-  def initialize(rank: 'A', suit: 'Spades')
+  def initialize(rank: 'Ace', suit: 'Spades')
     @rank = rank
     @suit = suit
   end
