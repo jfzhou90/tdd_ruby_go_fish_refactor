@@ -2,7 +2,7 @@ source('https://rubygems.org')
 
 gem('pry')
 gem('puma')
-gem('pusher')
+# gem('pusher')
 gem('sass')
 gem('shotgun')
 gem('sinatra')
