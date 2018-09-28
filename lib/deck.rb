@@ -46,6 +46,10 @@ class TestDeck
     # do nothing
   end
 
+  def shuffle_test
+    cards_left.shuffle!
+  end
+
   def deck_size
     cards_left.length
   end

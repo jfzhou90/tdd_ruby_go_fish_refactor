@@ -20,9 +20,18 @@
 }
 
 /* Fonts section */
-.bangers-font  {
+@font-face {
+  font-family: "Disney Comic";
+  src:url('Disney-Comic-Regular.ttf') format("truetype");
+};
+
+.disney-font  {
   font-family: 'Bangers', cursive;
   letter-spacing: 1px;
+}
+
+.disney-font {
+  font-family: 'Disney Comic', cursive;
 }
 
 .sil-font {
@@ -31,4 +40,8 @@
 
 .sans-font {
   font-family: 'Open Sans', sans-serif;
+}
+
+.text-shadow {
+  text-shadow: 1px 1px #000000;
 }

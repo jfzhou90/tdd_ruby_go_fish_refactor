@@ -1,7 +1,19 @@
 source('https://rubygems.org')
 
-gem('capybara')
 gem('pry')
-gem('rspec')
+gem('puma')
+gem('pusher')
+gem('sass')
+gem('shotgun')
 gem('sinatra')
 gem('sinatra-contrib')
+gem('slim')
+gem('sprockets')
+
+group :test do
+  gem 'capybara'
+  gem 'capybara-selenium'
+  gem 'chromedriver-helper'
+  gem 'rack-test'
+  gem 'rspec'
+end

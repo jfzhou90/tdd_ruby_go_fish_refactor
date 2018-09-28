@@ -1,5 +1,5 @@
 class Player
-  attr_reader :name
+  attr_reader :name, :hand
 
   def initialize(name: 'Unknown Player')
     @name = name
@@ -40,7 +40,7 @@ class Player
 
   private
 
-  attr_reader :hand, :sets
+  attr_reader :sets
 
   def ranks
     hand.map(&:rank).uniq

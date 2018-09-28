@@ -12,22 +12,42 @@ class GoFishGame
     @winner = nil
   end
 
+  def start
+    distribute_cards_to_players
+  end
+
   def add_players(player)
     player.is_a?(Array) ? players.concat(player) : players.push(player)
   end
 
   def current_player
-    players[round % players.count]
+    winner ? nil : players[round % players.count]
   end
 
   def any_winner?
     players.any?(&:empty?) ? self.winner = highest_score_player : false
   end
 
+  def play_round(player_name, rank)
+    player = find_player(player_name)
+    player.any_rank?(rank) ? transfer_cards(player, rank) : go_fish(rank)
+    current_player.check_complete
+  end
+
+  def other_players(current_user)
+    players.reject { |player| player.name == current_user.name }
+  end
+
+  def find_player(name)
+    players.find { |player| player.name.casecmp(name).zero? }
+  end
+
   private
 
   attr_accessor :round
   attr_writer :winner
+
+  def requested_player(player); end
 
   def go_to_next_player
     self.round = round + 1
