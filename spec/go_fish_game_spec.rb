@@ -6,8 +6,10 @@ require('player')
 
 describe(GoFishGame) do
   let(:game) { GoFishGame.new(deck: TestDeck.new) }
+  let(:computer_player) { ComputerPlayer.new('Larry') }
   let(:player) { Player.new(name: 'Joey') }
   let(:player2) { Player.new(name: 'Roy') }
+  let(:player3) { Player.new(name: 'Justin') }
   let(:players) { [Player.new, Player.new, Player.new, Player.new] }
   let(:set) { [PlayingCard.new, PlayingCard.new, PlayingCard.new, PlayingCard.new] }
 
@@ -105,6 +107,22 @@ describe(GoFishGame) do
       game.add_players([player, player2])
       game.send(:go_fish, '2')
       expect(game.current_player.name).to eq('Roy')
+    end
+  end
+
+  describe('#auto_play') do
+    it('picking a random player other than self') do
+      game.add_players([player, player2, player3])
+      other_player_names = game.other_players(player).map(&:name)
+      expect(other_player_names.include?(game.send(:random_player_name))).to be(true)
+    end
+
+    it('computer finishes the game') do
+      game.add_players(player)
+      game.add_players(computer_player)
+      game.send(:distribute_cards_to_players)
+      game.send(:go_to_next_player)
+      expect(game.winner).to be(computer_player)
     end
   end
 end

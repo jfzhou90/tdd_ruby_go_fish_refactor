@@ -1,5 +1,6 @@
 require('./lib/deck')
 require('./lib/player')
+require('./lib/computer_player')
 
 class GoFishGame
   attr_reader :deck, :players, :started, :winner
@@ -21,7 +22,9 @@ class GoFishGame
   end
 
   def current_player
-    winner ? nil : players[round % players.count]
+    return nil if winner || players.count.zero?
+
+    players[round % players.count]
   end
 
   def any_winner?
@@ -47,10 +50,9 @@ class GoFishGame
   attr_accessor :round
   attr_writer :winner
 
-  def requested_player(player); end
-
   def go_to_next_player
     self.round = round + 1
+    auto_play if current_player.instance_of?(ComputerPlayer)
   end
 
   def distribute_cards_to_players
@@ -73,5 +75,21 @@ class GoFishGame
     card = deck.deal
     current_player.add_cards(card)
     go_to_next_player unless card.rank.casecmp(rank).zero?
+  end
+
+  def random_player_name
+    random_index = rand(0...players.count - 1)
+    other_players(current_player)[random_index].name
+  end
+
+  def random_rank
+    current_player.pick_random_rank
+  end
+
+  def auto_play
+    while current_player.instance_of?(ComputerPlayer)
+      play_round(random_player_name, random_rank)
+      any_winner?
+    end
   end
 end
