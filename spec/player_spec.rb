@@ -120,4 +120,12 @@ describe(Player) do
       expect(player.points).to be(1)
     end
   end
+
+  describe('#toggle_autoplay') do
+    it('toggles auto status on the player') do
+      expect(player.auto).to be(false)
+      player.toggle_autoplay
+      expect(player.auto).to be(true)
+    end
+  end
 end

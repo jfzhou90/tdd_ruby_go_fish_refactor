@@ -1,10 +1,11 @@
 class Player
-  attr_reader :name, :hand
+  attr_reader :name, :hand, :auto
 
   def initialize(name: 'Unknown Player')
     @name = name
     @hand = []
     @sets = []
+    @auto = false
   end
 
   def add_cards(cards)
@@ -31,16 +32,27 @@ class Player
   end
 
   def check_complete
+    old_points = points
     ranks.each { |rank| make_a_book(rank) if count(rank) == 4 }
+    true if points != old_points
   end
 
   def points
     sets.map(&:rank).uniq.count
   end
 
+  def pick_random_rank
+    ranks[rand(0...ranks.size)]
+  end
+
+  def toggle_autoplay
+    self.auto = (auto ? false : true)
+  end
+
   private
 
   attr_reader :sets
+  attr_writer :auto
 
   def ranks
     hand.map(&:rank).uniq

@@ -1,6 +1,6 @@
 require('./lib/deck')
 require('./lib/player')
-require('./lib/computer_player')
+require('pry')
 
 class GoFishGame
   attr_reader :deck, :players, :started, :winner
@@ -11,10 +11,12 @@ class GoFishGame
     @round = 0
     @started = false
     @winner = nil
+    @logs = []
   end
 
   def start
     distribute_cards_to_players
+    add_log('Game started!')
   end
 
   def add_players(player)
@@ -29,12 +31,13 @@ class GoFishGame
 
   def any_winner?
     players.any?(&:empty?) ? self.winner = highest_score_player : false
+    add_log("#{winner.name} wins the game!") if winner
   end
 
   def play_round(player_name, rank)
     player = find_player(player_name)
     player.any_rank?(rank) ? transfer_cards(player, rank) : go_fish(rank)
-    current_player.check_complete
+    add_log("#{current_player.name} completed #{rank}.") if current_player.check_complete
   end
 
   def other_players(current_user)
@@ -45,14 +48,19 @@ class GoFishGame
     players.find { |player| player.name.casecmp(name).zero? }
   end
 
+  def last_ten_logs
+    logs.last(10)
+  end
+
   private
 
+  attr_reader :logs
   attr_accessor :round
   attr_writer :winner
 
   def go_to_next_player
     self.round = round + 1
-    auto_play if current_player.instance_of?(ComputerPlayer)
+    auto_play if current_player
   end
 
   def distribute_cards_to_players
@@ -67,13 +75,19 @@ class GoFishGame
     players.max_by(&:points)
   end
 
+  def add_log(message)
+    logs.push(message)
+  end
+
   def transfer_cards(player, rank)
     current_player.add_cards(player.give(rank))
+    add_log("#{current_player.name} took #{rank}s from #{player.name}.")
   end
 
   def go_fish(rank)
     card = deck.deal
     current_player.add_cards(card)
+    add_log("#{current_player.name} fished a card.")
     go_to_next_player unless card.rank.casecmp(rank).zero?
   end
 
@@ -87,7 +101,7 @@ class GoFishGame
   end
 
   def auto_play
-    while current_player.instance_of?(ComputerPlayer)
+    while !current_player.nil? && current_player.auto
       play_round(random_player_name, random_rank)
       any_winner?
     end
