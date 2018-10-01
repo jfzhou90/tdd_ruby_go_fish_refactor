@@ -11,6 +11,7 @@ class GoFishGame
     @round = 0
     @started = false
     @winner = nil
+    @logs = []
   end
 
   def start
@@ -47,7 +48,7 @@ class GoFishGame
 
   private
 
-  attr_accessor :round
+  attr_accessor :round, :logs
   attr_writer :winner
 
   def go_to_next_player
