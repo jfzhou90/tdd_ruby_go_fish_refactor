@@ -3,7 +3,7 @@ require('./lib/player')
 require('pry')
 
 class GoFishGame
-  attr_reader :deck, :players, :started, :winner
+  attr_reader :deck, :players, :started, :winner, :game_id
 
   def initialize(deck: CardDeck.new)
     @deck = deck
@@ -12,6 +12,7 @@ class GoFishGame
     @started = false
     @winner = nil
     @logs = []
+    @game_id = rand(1_000_000..9_999_999)
   end
 
   def start

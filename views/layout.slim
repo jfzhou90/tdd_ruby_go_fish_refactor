@@ -1,0 +1,16 @@
+doctype html
+html
+  head
+    meta content=("text/html; charset=UTF-8") http-equiv="Content-Type" /
+    title Go Fish!
+    meta content="width=device-width, initial-scale=1" name="viewport" /
+    link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" rel="stylesheet" /
+    link href="https://fonts.googleapis.com/css?family=Bangers" rel="stylesheet" /
+    link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light" rel="stylesheet" /
+    link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" /
+    link href="assets/application.css" rel="stylesheet" /
+    script src="https://js.pusher.com/4.3/pusher.min.js"
+    script src="assets/pusher_config.js"
+  body
+    .main_container.flex-column
+      == yield

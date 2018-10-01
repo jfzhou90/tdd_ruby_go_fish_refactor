@@ -1,0 +1,38 @@
+.instruction__container {
+  background-color: #62B3E1;
+  width: 50%;
+  text-align: center;
+  border-radius: 10px;
+  padding: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.instruction__title {
+  background-color: #33637E;
+  width: 100%;
+  font-size: 25px;
+  border-radius: 10px 10px 0px 0px;
+  padding: 10px;
+  margin-top: -30px;
+}
+
+.instruction__text {
+  font-size: 20px;
+  margin: 5px;
+  text-align: left;
+}
+
+@media (max-width: 600px) {
+  .instruction__container {
+    width: 80%;
+  }
+  .instruction__text {
+    font-size: 15px;
+    margin: 5px;
+  }
+
+  .instruction__title {
+    margin-top: -10px;
+  }
+}

@@ -1,0 +1,47 @@
+/* Colors section */
+.blue-1 {
+  color: #DCF3FF;
+}
+
+.blue-2 {
+  color: #62B3E1;
+}
+
+.blue-3 {
+  color: #66A6CB;
+}
+
+.blue-4 {
+  color: #20597A;
+}
+
+.yellow {
+  color: #DCD337;
+}
+
+/* Fonts section */
+@font-face {
+  font-family: "Disney Comic";
+  src:url('Disney-Comic-Regular.ttf') format("truetype");
+};
+
+.bangers-font  {
+  font-family: 'Bangers', cursive;
+  letter-spacing: 2px;
+}
+
+.disney-font {
+  font-family: 'Disney Comic', cursive;
+}
+
+.sil-font {
+  font-family: 'Shadows Into Light', cursive;
+}
+
+.sans-font {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.text-shadow {
+  text-shadow: 1px 1px #000000;
+}

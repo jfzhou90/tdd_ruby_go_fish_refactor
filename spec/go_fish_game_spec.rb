@@ -12,6 +12,12 @@ describe(GoFishGame) do
   let(:players) { [Player.new, Player.new, Player.new, Player.new] }
   let(:set) { [PlayingCard.new, PlayingCard.new, PlayingCard.new, PlayingCard.new] }
 
+  describe('#initialize') do
+    it('have a game id') do
+      expect(game.game_id.class).to be(Integer)
+    end
+  end
+
   describe('#add_player') do
     it('allows user to join a game') do
       game.add_players(player)
