@@ -32,13 +32,13 @@ RSpec.describe Server do
     expect(page.current_path).to eq('/play_setup')
   end
 
-  it('menu page have How to button and clickable') do
+  it('menu page have how to play button and clickable') do
     login
     click_on 'How to Play'
     expect(page.current_path).to eq('/how_to_play')
   end
 
-  it('menu page have How to button and clickable') do
+  it('menu page have log out button and clickable') do
     login
     click_on 'Log Out'
     expect(page.current_path).to eq('/login')
