@@ -6,7 +6,6 @@ require('player')
 
 describe(GoFishGame) do
   let(:game) { GoFishGame.new(deck: TestDeck.new) }
-  let(:computer_player) { ComputerPlayer.new('Larry') }
   let(:player) { Player.new(name: 'Joey') }
   let(:player2) { Player.new(name: 'Roy') }
   let(:player3) { Player.new(name: 'Justin') }
@@ -117,12 +116,23 @@ describe(GoFishGame) do
       expect(other_player_names.include?(game.send(:random_player_name))).to be(true)
     end
 
-    it('computer finishes the game') do
-      game.add_players(player)
-      game.add_players(computer_player)
+    it('autoplay to finish the game') do
+      game.add_players([player, player2])
+      player2.toggle_autoplay
       game.send(:distribute_cards_to_players)
       game.send(:go_to_next_player)
-      expect(game.winner).to be(computer_player)
+      expect(game.winner).to be(player2)
+    end
+  end
+
+  describe('#last_ten_logs') do
+    it('returns the last 10 logs') do
+      game.add_players([player, player2])
+      player2.toggle_autoplay
+      game.start
+      game.send(:go_to_next_player)
+      expect(game.last_ten_logs.count > 5).to be(true)
+      expect(game.last_ten_logs.include?('Roy wins the game!')).to be(true)
     end
   end
 end

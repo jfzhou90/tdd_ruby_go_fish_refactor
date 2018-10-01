@@ -32,7 +32,9 @@ class Player
   end
 
   def check_complete
+    old_points = points
     ranks.each { |rank| make_a_book(rank) if count(rank) == 4 }
+    true if points != old_points
   end
 
   def points
@@ -43,7 +45,7 @@ class Player
     ranks[rand(0...ranks.size)]
   end
 
-  def auto_play
+  def toggle_autoplay
     self.auto = (auto ? false : true)
   end
 
