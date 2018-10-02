@@ -1,0 +1,11 @@
+.setup__container.flex-column
+  form.setup__form action="/play" method="post"
+    h3.blue-4.disney-font How many Players?
+    .flex-row.form__input
+      i.fa.fa-minus-circle
+      input.setup__input-player name="player_count" type="number" min=1 max=5 value=2
+      i.fa.fa-plus-circle
+    .flex-column.form__buttons
+      button.primary-button.yellow.disney-font type='submit' Start
+      a.primary-button.yellow.disney-font href='/' Cancel
+  span.setup__hint.blue-4.sans-font Game will auto populate if nobody joins

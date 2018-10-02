@@ -10,7 +10,7 @@ require_relative 'lib/player'
 require 'pry'
 require 'pusher'
 
-class Server < Sinatra::Base
+class Server < Sinatra::Base # rubocop:disable Metrics/ClassLength
   enable :sessions
 
   configure :development do
@@ -43,12 +43,9 @@ class Server < Sinatra::Base
   end
   # End Assets
 
-  def self.games
-    @@games ||= {} # rubocop:disable Style/ClassVars
-  end
-
-  def self.pending_games
-    @@pending_game ||= {} # rubocop:disable Style/ClassVars
+  # Methods for rspec testing
+  def self.timer
+    @@timer ||= 30 # rubocop:disable Style/ClassVars
   end
 
   def self.reset
@@ -56,14 +53,57 @@ class Server < Sinatra::Base
     @@games = {} # rubocop:disable Style/ClassVars
   end
 
-  def self.inject_test_deck
-    @@game = GoFishGame.new(deck: TestDeck.new) # rubocop:disable Style/ClassVars
+  def self.change_timer
+    @@timer = 0.1 # rubocop:disable Style/ClassVars
   end
 
+  def self.inject_test_game
+    @@games = GoFishGame.new(deck: TestDeck.new) # rubocop:disable Style/ClassVars
+  end
+
+  # Class Variables
+  def self.games
+    @@games ||= {} # rubocop:disable Style/ClassVars
+  end
+
+  def self.pending_games
+    @@pending_games ||= {} # rubocop:disable Style/ClassVars
+  end
+
+  # Server methods
   def validate_user(user, pass)
     session[:user] = user.capitalize unless !user && !pass ## temporary until game implemented
   end
 
+  def make_sure_game_exist(player_count)
+    game = self.class.pending_games[player_count]
+    self.class.pending_games[player_count] = create_game(player_count) if game.nil?
+  end
+
+  def create_game(player_count)
+    game = GoFishGame.new
+    Thread.start do
+      sleep(self.class.timer)
+      start_game(game, player_count)
+    end
+    game
+  end
+
+  def join_a_game(player_count)
+    make_sure_game_exist(player_count)
+    game = self.class.pending_games[player_count]
+    game.add_players(Player.new(name: session[:user]))
+    session[:game_id] = game.game_id
+    start_game(game, player_count) if game.players.count == player_count
+  end
+
+  def start_game(game, player_count)
+    game.fill_game_with_bots(player_count) unless game.started
+    self.class.pending_games[player_count] = nil
+    self.class.games[game.game_id] = game
+  end
+
+  # Paths
   get '/' do
     redirect('/menu')
   end
@@ -91,11 +131,16 @@ class Server < Sinatra::Base
     slim(:how_to_play)
   end
 
-  get('/quick_play_setup') do
-    slim(:quick_play_setup)
-  end
-
   get('/play_setup') do
     slim(:play_setup)
+  end
+
+  post('/play') do
+    join_a_game(params.fetch('player_count').to_i)
+    redirect('/game')
+  end
+
+  get('/game') do
+    slim(:game)
   end
 end

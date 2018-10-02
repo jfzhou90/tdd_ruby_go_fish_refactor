@@ -3,7 +3,7 @@ require('./lib/player')
 require('pry')
 
 class GoFishGame
-  attr_reader :deck, :players, :started, :winner, :game_id
+  attr_reader :deck, :players, :winner, :game_id, :started
 
   def initialize(deck: CardDeck.new)
     @deck = deck
@@ -16,6 +16,7 @@ class GoFishGame
   end
 
   def start
+    self.started = true
     distribute_cards_to_players
     add_log('Game started!')
   end
@@ -53,11 +54,21 @@ class GoFishGame
     logs.last(10)
   end
 
+  def fill_game_with_bots(desired_player_count)
+    bot_count = desired_player_count - players.count
+    bot_count.times do |count|
+      bot = Player.new(name: "FisherBot #{count}")
+      bot.toggle_autoplay
+      add_players(bot)
+    end
+    start
+  end
+
   private
 
   attr_reader :logs
   attr_accessor :round
-  attr_writer :winner
+  attr_writer :winner, :started
 
   def go_to_next_player
     self.round = round + 1

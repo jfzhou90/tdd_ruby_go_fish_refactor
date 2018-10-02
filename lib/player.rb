@@ -46,7 +46,7 @@ class Player
   end
 
   def toggle_autoplay
-    self.auto = (auto ? false : true)
+    self.auto = !auto
   end
 
   private
