@@ -12,6 +12,12 @@ describe(GoFishGame) do
   let(:players) { [Player.new, Player.new, Player.new, Player.new] }
   let(:set) { [PlayingCard.new, PlayingCard.new, PlayingCard.new, PlayingCard.new] }
 
+  describe('#initialize') do
+    it('have a game id') do
+      expect(game.game_id.class).to be(Integer)
+    end
+  end
+
   describe('#add_player') do
     it('allows user to join a game') do
       game.add_players(player)
@@ -133,6 +139,21 @@ describe(GoFishGame) do
       game.send(:go_to_next_player)
       expect(game.last_ten_logs.count > 5).to be(true)
       expect(game.last_ten_logs.include?('Roy wins the game!')).to be(true)
+    end
+  end
+
+  describe('#fill_game_with_bots') do
+    it('adds a game of bots') do
+      game.fill_game_with_bots(5)
+      expect(game.players.count).to be(5)
+      expect(game.players.all? { |player| player.auto == true }).to be(true)
+    end
+
+    it('add 4 bots when there is a player joined') do
+      game.add_players(player)
+      game.fill_game_with_bots(5)
+      expect(game.players.count).to be(5)
+      expect(game.players.count(&:auto)).to be(4)
     end
   end
 end

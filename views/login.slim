@@ -1,0 +1,16 @@
+.login__container.shadow
+  img.login__logo alt=("Go Fish Logo") src="assets/mainlogo.png"
+  h1.login__title.disney-font.blue-4.text-shadow Go Fish
+  form.login__form.flex-column action="/login" method="post"
+    label.login__label.flex-row.yellow.sans-font.text-shadow Username:
+    .flex-row.login__input--container
+      i.fa.fa-user aria-hidden="true"
+      input.login__input.sil-font autocomplete="off" name="username" type="text" value="joey"
+    label.login__label.flex-row.yellow.sans-font.text-shadow Password:
+    .flex-row.login__input--container
+      i.fa.fa-key aria-hidden="true"
+      input.login__input.sil-font autocomplete="off" name="password" type="password" value="password"
+    button.primary-button.shadow.yellow.disney-font Login
+  span.signup
+    | No account?
+    a href="#"  Sign up
