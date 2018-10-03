@@ -168,8 +168,6 @@ class Server < Sinatra::Base # rubocop:disable Metrics/ClassLength
     player = game.find_player(session[:user])
     player.toggle_autoplay
     game.auto_play
-    puts player.auto
-    puts game.winner
     redirect('/')
   end
 end
