@@ -166,6 +166,7 @@ class Server < Sinatra::Base # rubocop:disable Metrics/ClassLength
   get('/quit') do
     game = find_game_by_id
     player = game.find_player(session[:user])
+    session[:game_id] = nil
     player.toggle_autoplay
     game.auto_play
     redirect('/')
