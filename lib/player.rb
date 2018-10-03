@@ -34,7 +34,7 @@ class Player
   def check_complete
     old_points = points
     ranks.each { |rank| make_a_book(rank) if count(rank) == 4 }
-    true if points != old_points
+    points != old_points
   end
 
   def points
@@ -49,22 +49,22 @@ class Player
     self.auto = !auto
   end
 
-  private
-
-  attr_reader :sets
-  attr_writer :auto
+  def count(rank)
+    hand.count { |card| card.rank == rank }
+  end
 
   def ranks
     hand.map(&:rank).uniq
   end
 
+  private
+
+  attr_reader :sets
+  attr_writer :auto
+
   def make_a_book(rank)
     cards = give(rank)
     sets.concat(cards)
-  end
-
-  def count(rank)
-    hand.count { |card| card.rank == rank }
   end
 
   def sort_cards

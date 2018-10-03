@@ -1,0 +1,9 @@
+.current__user--container.flex-column
+  span.current__user--name.disney-font.yellow.text-shadow-2 #{player.name}
+  .player__card--container.flex-row
+    - player.ranks.each do |rank|
+      input.radio__card name="rank" type="radio" value="#{rank}" id="#{rank}" required=""
+      label.card__container.flex-column for="#{rank}"
+        - player.count(rank).times do
+          .player__card--big #{rank}
+  span.current__user--points.yellow.disney-font.text-shadow-2 Points: #{player.points}

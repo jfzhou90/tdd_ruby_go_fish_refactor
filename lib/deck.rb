@@ -17,6 +17,10 @@ class CardDeck
     cards_left.length
   end
 
+  def empty?
+    cards_left.empty?
+  end
+
   private
 
   attr_reader :cards_left

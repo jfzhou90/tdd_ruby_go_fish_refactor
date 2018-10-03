@@ -45,7 +45,7 @@ class Server < Sinatra::Base # rubocop:disable Metrics/ClassLength
 
   # Methods for rspec testing
   def self.timer
-    @@timer ||= 30 # rubocop:disable Style/ClassVars
+    @@timer ||= 2 # rubocop:disable Style/ClassVars
   end
 
   def self.reset
@@ -99,8 +99,14 @@ class Server < Sinatra::Base # rubocop:disable Metrics/ClassLength
 
   def start_game(game, player_count)
     game.fill_game_with_bots(player_count) unless game.started
-    self.class.pending_games[player_count] = nil
+    self.class.pending_games.delete(player_count)
     self.class.games[game.game_id] = game
+  end
+
+  def find_game_by_id
+    game_id = session[:game_id]
+    game = self.class.pending_games.find { |_, pending_game| pending_game.game_id == game_id }
+    game.nil? ? self.class.games[game_id] : game[1]
   end
 
   # Paths
@@ -135,12 +141,24 @@ class Server < Sinatra::Base # rubocop:disable Metrics/ClassLength
     slim(:play_setup)
   end
 
-  post('/play') do
+  post('/start') do
     join_a_game(params.fetch('player_count').to_i)
     redirect('/game')
   end
 
   get('/game') do
-    slim(:game)
+    game = find_game_by_id
+    slim(:game, locals: { game: game, user: session[:user] })
+  end
+
+  post('/play') do
+    return redirect('/game') if params['player'].nil? || params['rank'].nil?
+
+    game = find_game_by_id
+    player = params.fetch('player')
+    rank = params.fetch('rank')
+    game.play_round(player, rank)
+    @@pusher_client.trigger('my-channel', 'my-event', { message: 'hello world' })
+    redirect('/game')
   end
 end

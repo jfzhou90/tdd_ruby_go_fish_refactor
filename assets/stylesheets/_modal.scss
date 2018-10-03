@@ -1,0 +1,21 @@
+.modal__container {
+  position:absolute;
+  background:rgba(0,0,0,0.6);
+  top: 50px;
+  bottom: 50px;
+  left: 50px;
+  right: 50px;
+  visibility: hidden;
+  z-index: 3;
+  text-align:center;
+  justify-content: space-evenly;
+}
+
+.game__logs-checkbox:checked + .modal__container {
+  visibility: visible;
+  color:white;
+}
+
+.game__logs--message {
+  font-size: 20px;
+}

@@ -1,0 +1,30 @@
+ruby:
+  player = game.find_player(user)
+  other_players = game.other_players(player)
+  message = game.winner ? "#{game.winner.name} Wins!" : "#{game.current_player.name}'s Turn"
+
+.game__container
+  .game__info.flex-row
+    a.game__leave.blue-4 href='/' Quit
+    span.game__announcement.disney-font.yellow.text-shadow #{message}
+    input.game__logs-checkbox type="checkbox" id="logs" name="logs"
+      ==slim(:_modal, locals:{ game: game })
+    label.game__logs-label for="logs" Game Logs
+  form action="/play" method="post"
+    .game__row--players.flex-row
+      - if other_players.count >= 1
+        == slim(:_opponent, locals:{ player: other_players[0]})
+      - if other_players.count >= 2
+        == slim(:_opponent, locals:{ player: other_players[1]})
+    .game__row--players.flex-row
+      - if other_players.count >= 3
+        == slim(:_opponent, locals:{ player: other_players[2]})
+      .pond__container
+        img.pond__image alt=("Deck of Cards") src="assets/pond.png"
+        span.cards__left.disney-font.yellow.text-shadow-2 Cards Left : #{game.deck.deck_size}
+      - if other_players.count >= 4
+        == slim(:_opponent, locals:{ player: other_players[3]})
+    .game__row--players.flex-row
+      ==slim(:_player, locals:{player: player})
+    - if !game.current_player.nil? && game.current_player.name == user
+      button.play__round type="submit" Play
