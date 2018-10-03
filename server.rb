@@ -162,4 +162,14 @@ class Server < Sinatra::Base # rubocop:disable Metrics/ClassLength
     game.play_round(player, rank)
     @@pusher_client.trigger(session[:game_id], 'refresh', {})
   end
+
+  get('/quit') do
+    game = find_game_by_id
+    player = game.find_player(session[:user])
+    player.toggle_autoplay
+    game.auto_play
+    puts player.auto
+    puts game.winner
+    redirect('/')
+  end
 end

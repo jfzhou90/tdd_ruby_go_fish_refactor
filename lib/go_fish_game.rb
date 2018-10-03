@@ -65,6 +65,10 @@ class GoFishGame
     start
   end
 
+  def auto_play
+    play_round(random_player_name, random_rank) while !current_player.nil? && current_player.auto
+  end
+
   private
 
   attr_reader :logs
@@ -119,9 +123,5 @@ class GoFishGame
 
   def random_rank
     current_player.pick_random_rank
-  end
-
-  def auto_play
-    play_round(random_player_name, random_rank) while !current_player.nil? && current_player.auto
   end
 end
