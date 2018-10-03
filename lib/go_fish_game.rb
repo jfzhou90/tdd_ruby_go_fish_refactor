@@ -66,6 +66,8 @@ class GoFishGame
   end
 
   def auto_play
+    return if winner
+
     play_round(random_player_name, random_rank) while !current_player.nil? && current_player.auto
   end
 
