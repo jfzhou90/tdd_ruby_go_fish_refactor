@@ -1,0 +1,87 @@
+.game__container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.game__info {
+  height: 10%;
+  justify-content: center;
+}
+
+.game__leave {
+  position: fixed;
+  top: 5px;
+  left: 5px;
+  width: 10%;
+  background-color: #DCF3FF;
+  border-radius: 10px;
+  border: 2px solid black;
+  color: red;
+  text-align:center;
+}
+
+.game__logs-checkbox {
+  visibility: hidden;
+}
+
+.game__logs-label {
+  cursor: pointer;
+  position: fixed;
+  top: 5px;
+  right: 5px;
+  width: 20%;
+  border-radius: 10px;
+  border: 2px solid black;
+  color: #20597A;
+  text-align:center;
+  background: #DCF3FF;
+  z-index: 2;
+}
+
+.game__logs-checkbox:checked + .game__logs-label {
+  background: yellow;
+}
+
+.game__announcement {
+  position: fixed;
+  top: 5px;
+  border: 2px #20597A;
+  border-radius: 10px;
+  font-size: 20px;
+  text-align: center;
+  background: #20597A;
+  padding: 5px;
+}
+
+.game__row--players {
+  height: 25vh;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.pond__container {
+  width: 30%;
+  height: 100%;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.pond__image {
+  width: 80%;
+  z-index: -2
+}
+
+.cards__left {
+  font-size: 15px;
+}
+
+@media(max-width: 650px) {
+  .cards__left {
+    font-size: 10px;
+    position: fixed;
+    top:50%;
+  }
+}

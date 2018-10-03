@@ -10,7 +10,10 @@ html
     link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" /
     link href="assets/application.css" rel="stylesheet" /
     script src="https://js.pusher.com/4.3/pusher.min.js"
-    script src="assets/pusher_config.js"
+
+  javascript:
+    var game_id = "#{session[:game_id]}"
   body
     .main_container.flex-column
       == yield
+    script src="assets/pusher_config.js"

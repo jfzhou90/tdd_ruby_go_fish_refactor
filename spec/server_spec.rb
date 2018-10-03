@@ -53,7 +53,7 @@ RSpec.describe Server do
 
   describe('#start a game of bots') do
     before { Server.change_timer }
-    it('plays a game of bots with one player') do
+    it('starts a game of bots with one player') do
       login
       sleep(0.3)
       game_id = Server.games.keys[0]

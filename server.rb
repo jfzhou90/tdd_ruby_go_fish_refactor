@@ -85,6 +85,7 @@ class Server < Sinatra::Base # rubocop:disable Metrics/ClassLength
     Thread.start do
       sleep(self.class.timer)
       start_game(game, player_count)
+      @@pusher_client.trigger(session[:game_id], 'refresh', { message: 'hello world' })
     end
     game
   end
@@ -99,8 +100,14 @@ class Server < Sinatra::Base # rubocop:disable Metrics/ClassLength
 
   def start_game(game, player_count)
     game.fill_game_with_bots(player_count) unless game.started
-    self.class.pending_games[player_count] = nil
+    self.class.pending_games.delete(player_count)
     self.class.games[game.game_id] = game
+  end
+
+  def find_game_by_id
+    game_id = session[:game_id]
+    game = self.class.pending_games.find { |_, pending_game| pending_game.game_id == game_id }
+    game.nil? ? self.class.games[game_id] : game[1]
   end
 
   # Paths
@@ -135,12 +142,23 @@ class Server < Sinatra::Base # rubocop:disable Metrics/ClassLength
     slim(:play_setup)
   end
 
-  post('/play') do
+  post('/start') do
     join_a_game(params.fetch('player_count').to_i)
     redirect('/game')
   end
 
   get('/game') do
-    slim(:game)
+    game = find_game_by_id
+    slim(:game, locals: { game: game, user: session[:user] })
+  end
+
+  post('/play') do
+    return redirect('/game') if params['player'].nil? || params['rank'].nil?
+
+    game = find_game_by_id
+    player = params.fetch('player')
+    rank = params.fetch('rank')
+    game.play_round(player, rank)
+    @@pusher_client.trigger(session[:game_id], 'refresh', {})
   end
 end

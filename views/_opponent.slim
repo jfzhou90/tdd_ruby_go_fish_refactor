@@ -1,0 +1,11 @@
+- if player.nil?
+  .placeholder
+- else
+  .opponent_container.flex-column
+    input.radio__player name="player" type="radio" value="#{player.name}" id="#{player.name}" required=""
+    label.label__player for="#{player.name}"
+      span.player__container--name.yellow.text-shadow-2.disney-font #{player.name}
+      .fake__card--container
+        - player.cards_left.times do |card|
+          .fake__card--card
+      span.player__container--points.yellow.text-shadow-2.disney-font Points: #{player.points}

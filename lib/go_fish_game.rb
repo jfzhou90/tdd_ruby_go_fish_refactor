@@ -33,13 +33,14 @@ class GoFishGame
 
   def any_winner?
     players.any?(&:empty?) ? self.winner = highest_score_player : false
+    deck.empty? ? self.winner = highest_score_player : false
     add_log("#{winner.name} wins the game!") if winner
   end
 
   def play_round(player_name, rank)
     player = find_player(player_name)
     player.any_rank?(rank) ? transfer_cards(player, rank) : go_fish(rank)
-    add_log("#{current_player.name} completed #{rank}.") if current_player.check_complete
+    any_winner?
   end
 
   def other_players(current_user)
@@ -57,7 +58,7 @@ class GoFishGame
   def fill_game_with_bots(desired_player_count)
     bot_count = desired_player_count - players.count
     bot_count.times do |count|
-      bot = Player.new(name: "FisherBot #{count}")
+      bot = Player.new(name: "FisherBot #{count + 1}")
       bot.toggle_autoplay
       add_players(bot)
     end
@@ -94,13 +95,21 @@ class GoFishGame
   def transfer_cards(player, rank)
     current_player.add_cards(player.give(rank))
     add_log("#{current_player.name} took #{rank}s from #{player.name}.")
+    completion_message(rank)
   end
 
   def go_fish(rank)
+    return if deck.empty?
+
     card = deck.deal
     current_player.add_cards(card)
     add_log("#{current_player.name} fished a card.")
+    completion_message(rank)
     go_to_next_player unless card.rank.casecmp(rank).zero?
+  end
+
+  def completion_message(rank)
+    add_log("#{current_player.name} completed #{rank}.") if current_player.check_complete
   end
 
   def random_player_name
@@ -113,9 +122,6 @@ class GoFishGame
   end
 
   def auto_play
-    while !current_player.nil? && current_player.auto
-      play_round(random_player_name, random_rank)
-      any_winner?
-    end
+    play_round(random_player_name, random_rank) while !current_player.nil? && current_player.auto
   end
 end

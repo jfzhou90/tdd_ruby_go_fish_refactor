@@ -87,11 +87,11 @@ describe(GoFishGame) do
   end
 
   describe('#transfer_cards') do
-    it('transfer cards from requested to requester') do
+    it('transfer cards from requested to requester and made a set') do
       game.add_players([player, player2])
       player2.add_cards(set)
       game.send(:transfer_cards, player2, 'Ace')
-      expect(player.cards_left).to be(4)
+      expect(game.last_ten_logs[1]).to match('Joey completed Ace.')
     end
   end
 
