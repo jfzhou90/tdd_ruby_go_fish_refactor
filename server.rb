@@ -13,15 +13,16 @@ require 'pusher'
 class Server < Sinatra::Base # rubocop:disable Metrics/ClassLength
   enable :sessions
 
+  @@pusher_client = Pusher::Client.new( # rubocop:disable Style/ClassVars
+    app_id: '610476',
+    key: 'd99443f440ef4328b615',
+    secret: '49ebba183891a1d3370d',
+    cluster: 'us2',
+    encrypted: true
+  )
+
   configure :development do
     register Sinatra::Reloader
-    @@pusher_client = Pusher::Client.new( # rubocop:disable Style/ClassVars
-      app_id: '610476',
-      key: 'd99443f440ef4328b615',
-      secret: '49ebba183891a1d3370d',
-      cluster: 'us2',
-      encrypted: true
-    )
   end
 
   before '/*' do
@@ -45,7 +46,7 @@ class Server < Sinatra::Base # rubocop:disable Metrics/ClassLength
 
   # Methods for rspec testing
   def self.timer
-    @@timer ||= 30 # rubocop:disable Style/ClassVars
+    @@timer ||= 15 # rubocop:disable Style/ClassVars
   end
 
   def self.reset
