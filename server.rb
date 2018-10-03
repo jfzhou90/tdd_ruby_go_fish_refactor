@@ -86,7 +86,7 @@ class Server < Sinatra::Base # rubocop:disable Metrics/ClassLength
     Thread.start do
       sleep(self.class.timer)
       start_game(game, player_count)
-      @@pusher_client.trigger(session[:game_id], 'refresh', { message: 'hello world' })
+      @@pusher_client.trigger(session[:game_id], 'refresh', {})
     end
     game
   end
