@@ -3,7 +3,7 @@ var pusher = new Pusher('d99443f440ef4328b615', {
   forceTLS: true
 });
 
-console.log(game_id)
+console.log("Here's the game id:" + game_id)
 var channel = pusher.subscribe(game_id);
 
 channel.bind('refresh', function(data) {

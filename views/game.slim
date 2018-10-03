@@ -3,9 +3,17 @@ ruby:
   other_players = game.other_players(player)
   message = game.winner ? "#{game.winner.name} Wins!" : "#{game.current_player.name}'s Turn"
 
+javascript:
+  const confirm_quit = () => {
+    var result = confirm("Leaving? You won't be able to rejoin, you sure?")
+    if(result) {
+      window.location = "/"
+    }
+  }
+
 .game__container
   .game__info.flex-row
-    a.game__leave.blue-4 href='/' Quit
+    a.game__leave.blue-4 href='#' onClick="confirm_quit()" Quit
     span.game__announcement.disney-font.yellow.text-shadow #{message}
     input.game__logs-checkbox type="checkbox" id="logs" name="logs"
       ==slim(:_modal, locals:{ game: game })
