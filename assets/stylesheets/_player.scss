@@ -14,6 +14,7 @@
 .radio__player:checked + .label__player {
   background: #BAD434;
   border-radius: 50%;
+  box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 1);
 }
 
 .card__container {
@@ -24,7 +25,7 @@
 }
 
 .player__card--container {
-  margin-top: 20px;
+  margin-top: -20px;
   padding: 10px;
   height: 30px;
   width: 30px;
@@ -52,12 +53,13 @@
 }
 
 .current__user--container {
-  margin-top: 70px;
+  margin-top: 100px;
   justify-content: space-evenly;
   width: 50%;
 }
 
 .current__user--name {
+  margin-bottom: 50px;
   font-size: 20px;
   text-align:center;
 }
@@ -101,6 +103,22 @@
     margin-top: 20px;
     padding: 5px;
     width: 5px;
+  }
+}
 
+@media(max-width: 600px) {
+  .current__user--name {
+    font-size: 15px;
+    margin-bottom: 0px;
+  }
+
+  .current__user--points {
+    font-size: 10px;
+  }
+
+  .player__card--container {
+    margin-top: 20px;
+    padding: 5px;
+    width: 5px;
   }
 }

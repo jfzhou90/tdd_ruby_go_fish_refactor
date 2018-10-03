@@ -37,13 +37,9 @@ class CardDeck
 end
 
 # this is for testing.
-class TestDeck
+class TestDeck < CardDeck
   def initialize
-    create_deck_of_cards
-  end
-
-  def deal
-    cards_left.pop
+    super()
   end
 
   def shuffle
@@ -52,10 +48,6 @@ class TestDeck
 
   def shuffle_test
     cards_left.shuffle!
-  end
-
-  def deck_size
-    cards_left.length
   end
 
   private

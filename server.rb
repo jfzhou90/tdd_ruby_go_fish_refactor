@@ -45,7 +45,7 @@ class Server < Sinatra::Base # rubocop:disable Metrics/ClassLength
 
   # Methods for rspec testing
   def self.timer
-    @@timer ||= 2 # rubocop:disable Style/ClassVars
+    @@timer ||= 30 # rubocop:disable Style/ClassVars
   end
 
   def self.reset
@@ -85,6 +85,7 @@ class Server < Sinatra::Base # rubocop:disable Metrics/ClassLength
     Thread.start do
       sleep(self.class.timer)
       start_game(game, player_count)
+      @@pusher_client.trigger(session[:game_id], 'refresh', { message: 'hello world' })
     end
     game
   end
@@ -158,7 +159,6 @@ class Server < Sinatra::Base # rubocop:disable Metrics/ClassLength
     player = params.fetch('player')
     rank = params.fetch('rank')
     game.play_round(player, rank)
-    @@pusher_client.trigger('my-channel', 'my-event', { message: 'hello world' })
-    redirect('/game')
+    @@pusher_client.trigger(session[:game_id], 'refresh', {})
   end
 end

@@ -99,6 +99,8 @@ class GoFishGame
   end
 
   def go_fish(rank)
+    return if deck.empty?
+
     card = deck.deal
     current_player.add_cards(card)
     add_log("#{current_player.name} fished a card.")
@@ -120,9 +122,6 @@ class GoFishGame
   end
 
   def auto_play
-    while !current_player.nil? && current_player.auto
-      play_round(random_player_name, random_rank)
-      any_winner?
-    end
+    play_round(random_player_name, random_rank) while !current_player.nil? && current_player.auto
   end
 end

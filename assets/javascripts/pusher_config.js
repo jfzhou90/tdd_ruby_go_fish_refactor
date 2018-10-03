@@ -3,9 +3,10 @@ var pusher = new Pusher('d99443f440ef4328b615', {
   forceTLS: true
 });
 
-var channel = pusher.subscribe('my-channel');
+console.log(game_id)
+var channel = pusher.subscribe(game_id);
 
-channel.bind('my-event', function(data) {
+channel.bind('refresh', function(data) {
   window.location.reload();
 });
 
