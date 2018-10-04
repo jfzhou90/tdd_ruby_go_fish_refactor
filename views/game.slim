@@ -5,7 +5,7 @@ ruby:
 
 javascript:
   const confirm_quit = () => {
-    var result = confirm("Leaving? You won't be able to rejoin, you sure?")
+    var result = confirm("Leaving? The AI will take over your turns if you leave.")
     if(result) {
       window.location = "/quit"
     }
